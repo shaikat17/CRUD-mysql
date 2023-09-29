@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
@@ -17,8 +17,19 @@ const Books = () => {
         fetchAllBooks()
     }, [])
 
+    const handleDelete = async (id) => {
+        console.log(id)
+        try {
+            await axios.delete(`http://localhost:5000/books/${id}`)
+            window.location.reload()
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     return (
-        <div>
+        <div className='app'>
+            <div>
             <h1>Shaikat Book Shop</h1>
             <div className="books">
                 {books.map(book => {
@@ -28,11 +39,14 @@ const Books = () => {
                             <h2>{book.name}</h2>
                             <p>{book.desc}</p>
                             <p>{book.price}</p>
+                            <button className='delete' onClick={() => handleDelete(book.id)}>Delete</button>
+                            <button className='update'>Update</button>
                         </div>
                     )
                 })}
             </div>
             <button><Link to="/add">Add New Book</Link></button>
+            </div>
         </div>
     );
 };

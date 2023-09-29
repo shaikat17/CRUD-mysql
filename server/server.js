@@ -27,10 +27,11 @@ app.get('/books', (req,res) => {
 })
 
 app.post('/books', (req, res) => {
-    const q = "INSERT INTO books (`name`, `desc`, `cover`) VALUES(?)"
+    const q = "INSERT INTO books (`name`, `desc`, `price`, `cover`) VALUES(?)"
     const values = [
         req.body.name,
         req.body.desc,
+        req.body.price,
         req.body.cover
     ]
 
@@ -40,8 +41,17 @@ app.post('/books', (req, res) => {
     })
 })
 
+app.delete("/books/:id", (req, res) => {
+    const bookId = req.params.id;
+    console.log(bookId)
+    const q = " DELETE FROM books WHERE id = ? ";
+  
+    db.query(q, [bookId], (err, data) => {
+      if (err) return res.send(err);
+      return res.json(data);
+    });
+  });
+
 app.listen(5000, () => {
     console.log("Server start")
 })
-
-//test
