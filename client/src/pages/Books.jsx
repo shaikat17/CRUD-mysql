@@ -18,7 +18,7 @@ const Books = () => {
     }, [])
 
     const handleDelete = async (id) => {
-        console.log(id)
+        // console.log(id)
         try {
             await axios.delete(`http://localhost:5000/books/${id}`)
             window.location.reload()

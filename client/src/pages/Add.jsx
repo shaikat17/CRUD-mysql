@@ -27,7 +27,7 @@ const Add = () => {
         }
     }
 
-    console.log(book)
+    // console.log(book)
 
     return (
         <div className="app">

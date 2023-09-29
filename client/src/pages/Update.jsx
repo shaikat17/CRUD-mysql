@@ -1,10 +1,10 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const Update = () => {
   const [book, setBook] = useState({
-    title: "",
+    name: "",
     desc: "",
     price: null,
     cover: "",
@@ -22,15 +22,27 @@ const Update = () => {
 
   const handleClick = async (e) => {
     e.preventDefault();
-
     try {
-      await axios.put(`http://localhost:8800/books/${bookId}`, book);
+      await axios.put(`http://localhost:5000/books/${bookId}`, book);
       navigate("/");
     } catch (err) {
       console.log(err);
       setError(true);
     }
   };
+
+  useEffect(() => {
+    const getBook = async () => {
+        try {
+            const res = await axios.get(`http://localhost:5000/books/${bookId}`);
+            setBook(res.data[0])
+          } catch (err) {
+            console.log(err);
+          }
+    }
+
+    getBook()
+  },[])
 
   return (
     <div className="app">
@@ -39,7 +51,8 @@ const Update = () => {
       <input
         type="text"
         placeholder="Book title"
-        name="title"
+        name="name"
+        defaultValue={book?.name}
         onChange={handleChange}
       />
       <textarea
@@ -47,18 +60,21 @@ const Update = () => {
         type="text"
         placeholder="Book desc"
         name="desc"
+        defaultValue={book?.desc}
         onChange={handleChange}
       />
       <input
         type="number"
         placeholder="Book price"
         name="price"
+        defaultValue={book?.price}
         onChange={handleChange}
       />
       <input
         type="text"
         placeholder="Book cover"
         name="cover"
+        defaultValue={book?.cover}
         onChange={handleChange}
       />
       <button onClick={handleClick}>Update</button>
