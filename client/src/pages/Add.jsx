@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const Add = () => {
@@ -30,13 +30,15 @@ const Add = () => {
     console.log(book)
 
     return (
-        <div className='form'>
+        <div className="app">
+            <div className='form'>
             <h1>Add New Book</h1>
             <input type="text" placeholder='name' onChange={handleChange} name='name' />
             <input type="text" placeholder='desc' onChange={handleChange} name='desc' />
             <input type="number" placeholder='price' onChange={handleChange} name='price' />
             <input type="text" placeholder='cover' onChange={handleChange} name='cover' />
             <button onClick={handleClick}>ADD</button>
+        </div>
         </div>
     );
 };
